@@ -1,0 +1,68 @@
+{
+  "rule_version": "1.0",
+  "money": {
+    "decimal_places": 2,
+    "rounding": "ROUND_HALF_UP",
+    "payment_tolerance": "0.00"
+  },
+  "orders": {
+    "valid_statuses": ["DELIVERED", "CANCELLED", "RETURNED"],
+    "valid_payment_modes": ["UPI", "CARD", "CASH ON DELIVERY", "WALLET"],
+    "payment_mode_aliases": {
+      "UPI": "UPI",
+      "CARD": "CARD",
+      "CASH ON DELIVERY": "CASH ON DELIVERY",
+      "COD": "CASH ON DELIVERY",
+      "WALLET": "WALLET"
+    },
+    "loyalty_tiers": ["BRONZE", "SILVER", "GOLD", "PLATINUM"],
+    "zones": ["NORTH", "SOUTH", "EAST", "WEST"],
+    "product_categories": ["DAIRY & BAKERY", "FRUITS & VEGETABLES", "HOUSEHOLD", "PERSONAL CARE", "SNACKS & BEVERAGES", "STAPLES"],
+    "minimum_quantity_exclusive": 0,
+    "discount_pct_min": 0,
+    "discount_pct_max": 100,
+    "normal_delivery_minutes_min": 8,
+    "normal_delivery_minutes_max": 35,
+    "critical_delivery_minutes": 120,
+    "revenue_status": "DELIVERED"
+  },
+  "payments": {
+    "successful_status": "SUCCESS",
+    "recognized_statuses": ["SUCCESS", "FAILED", "REFUNDED"],
+    "comparison": "sum_successful_amounts_by_order_id",
+    "cancelled_orders_must_not_have_successful_payment": true
+  },
+  "duplicates": {
+    "within_file_winner": "last_physical_source_row",
+    "cross_file_order_precedence": ["orders.csv", "orders_2026-10-01_increment.csv"],
+    "increment_wins_over_baseline": true,
+    "increment_tie_breaker": "latest_loaded_at_then_last_physical_source_row"
+  },
+  "freshness": {
+    "maximum_order_age_days": 1,
+    "future_order_or_signup_is_critical": true,
+    "stale_historical_baseline_is_warning": true
+  },
+  "quality": {
+    "primary_key_severity": "CRITICAL",
+    "foreign_key_severity": "CRITICAL",
+    "order_amount_mismatch_severity": "CRITICAL",
+    "invalid_customer_contact_severity": "WARNING",
+    "invalid_customer_pincode_severity": "WARNING",
+    "normal_delivery_outside_range_severity": "WARNING",
+    "critical_delivery_severity": "CRITICAL",
+    "customer_city_missing_severity": "WARNING",
+    "gateway_ref_missing_severity": "WARNING",
+    "payment_status_unknown_severity": "WARNING",
+    "product_category_missing_severity": "CRITICAL",
+    "store_zone_missing_severity": "CRITICAL"
+  },
+  "privacy": {
+    "customer_personal_columns": ["full_name", "email", "phone", "city", "area", "pincode"],
+    "store_personal_columns": ["manager_name"],
+    "reporting_customer_id": "retain_pseudonymous_operational_id",
+    "reporting_name": "exclude",
+    "mask_email": "keep_first_local_character_and_domain",
+    "mask_phone": "keep_first_two_and_last_two_digits"
+  }
+}
